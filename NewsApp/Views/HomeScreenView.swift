@@ -126,7 +126,7 @@ struct HomeScreenView: View {
                     }
                 }
                 
-                // MARK: Filter Dropdown Menu
+                // MARK: Filter Menu
                 if filterOpen {
                     FilterMenuView(selectedFilter: $selectedFilter, filterOpen: $filterOpen)
                 }
