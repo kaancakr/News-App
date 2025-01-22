@@ -130,6 +130,11 @@ struct HomeScreenView: View {
                 if filterOpen {
                     FilterMenuView(selectedFilter: $selectedFilter, filterOpen: $filterOpen)
                 }
+                
+                // MARK: Calendar Menu
+                if showCalendar {
+                    CalendarMenuView(selectedDate: $selectedDate, calendarOpen: $showCalendar)
+                }
             }
             .navigationTitle("News")
         }
@@ -147,29 +152,8 @@ struct HomeScreenView: View {
         .onChange(of: selectedFilter) { newFilter in
             viewModel.fetchNews(forDate: selectedDate, forFilter: selectedFilter)
         }
-        .sheet(isPresented: $showCalendar) {
-            VStack {
-                Text("Select a Date")
-                    .font(.headline)
-                    .padding()
-                
-                DatePicker(
-                    "Pick a date",
-                    selection: Binding(
-                        get: { selectedDate ?? Date() },
-                        set: { selectedDate = $0 }
-                    ),
-                    displayedComponents: [.date]
-                )
-                .datePickerStyle(GraphicalDatePickerStyle())
-                .padding()
-                
-                Button("Done") {
-                    showCalendar = false
-                    viewModel.fetchNews(forDate: selectedDate, forFilter: nil)
-                }
-                .padding()
-            }
+        .onChange(of: selectedDate) { newFilter in
+            viewModel.fetchNews(forDate: selectedDate, forFilter: selectedFilter)
         }
     }
 }

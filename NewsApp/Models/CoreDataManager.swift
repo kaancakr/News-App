@@ -10,9 +10,9 @@ import CoreData
 
 class CoreDataManager {
     static let shared = CoreDataManager()
-
+    
     let persistentContainer: NSPersistentContainer
-
+    
     private init() {
         persistentContainer = NSPersistentContainer(name: "DataModel")
         persistentContainer.loadPersistentStores { description, error in
@@ -21,11 +21,11 @@ class CoreDataManager {
             }
         }
     }
-
+    
     var context: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
-
+    
     func saveContext() {
         if context.hasChanges {
             do {

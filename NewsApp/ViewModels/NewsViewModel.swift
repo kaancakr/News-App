@@ -97,10 +97,16 @@ class NewsViewModel: ObservableObject {
             }
         }
         
+        //print("Fetching news with parameters: \(parameters)")
+        
         provider.request(.fetchNews(parameters: parameters)) { [weak self] result in
             self?.isLoading = false
             switch result {
             case .success(let response):
+                
+                let apiResponse = String(data: response.data, encoding: .utf8)
+                print(apiResponse ?? "Error occured while decoding data")
+                
                 do {
                     let decoder = JSONDecoder()
                     decoder.dateDecodingStrategy = .iso8601

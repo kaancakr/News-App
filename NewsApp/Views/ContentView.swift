@@ -14,7 +14,7 @@ struct ContentView: View {
                 Image(systemName: "house")
                 Text("Home")
             }
-            FavouritesView().badge(5).tabItem() {
+            FavouritesView().tabItem() {
                 Image(systemName: "star")
                 Text("Favourites")
             }
