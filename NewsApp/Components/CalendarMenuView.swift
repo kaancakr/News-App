@@ -30,12 +30,21 @@ struct CalendarMenuView: View {
             .labelsHidden()
             .padding()
             
-            Button(action: { calendarOpen = false }) {
-                Text("Close")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
-                    .foregroundColor(.blue)
+            HStack {
+                Button(action: { calendarOpen = false }) {
+                    Text("Close")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+                        .foregroundColor(.blue)
+                }
+                Button(action: { selectedDate = nil }) {
+                    Text("Reset")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+                        .foregroundColor(.blue)
+                }
             }
         }
         .frame(width: 300)

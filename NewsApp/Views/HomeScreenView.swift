@@ -38,7 +38,7 @@ struct HomeScreenView: View {
                                         showCalendar.toggle()
                                     }) {
                                         Image(systemName: "calendar")
-                                            .foregroundColor(showCalendar ? .blue : .black)
+                                            .foregroundColor(showCalendar ? .blue : Color(.darkGray))
                                             .padding(.trailing, 10)
                                     }
                                 }
@@ -51,8 +51,8 @@ struct HomeScreenView: View {
                                 filterOpen.toggle()
                             }
                         }) {
-                            Image(systemName: "line.3.horizontal.decrease.circle")
-                                .foregroundColor(filterOpen ? .blue : .black)
+                            Image(systemName: "line.3.horizontal.decrease.circle.fill")
+                                .foregroundColor(filterOpen ? .blue : Color(.darkGray))
                                 .font(.title)
                                 .padding(.trailing, 20)
                         }
@@ -141,7 +141,7 @@ struct HomeScreenView: View {
         .onAppear {
             viewModel.fetchNews(forDate: selectedDate, forFilter: selectedFilter)
             
-            let favouritedArticles = viewModel.fetchFavoritedArticles()
+            let favouritedArticles = viewModel.fetchFavoritedArticles(forDate: selectedDate, forFilter: selectedFilter)
             favoriteStatus = Dictionary(
                 uniqueKeysWithValues: favouritedArticles.compactMap { article in
                     guard let id = article.id else { return nil }

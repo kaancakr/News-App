@@ -62,9 +62,32 @@ class NewsViewModel: ObservableObject {
         }
     }
     
-    func fetchFavoritedArticles() -> [FavouritedNews] {
+    func fetchFavoritedArticles(forDate date: Date?, forFilter filter: String?) -> [FavouritedNews] {
         let context = CoreDataManager.shared.context
         let fetchRequest: NSFetchRequest<FavouritedNews> = FavouritedNews.fetchRequest()
+        
+        var predicates: [NSPredicate] = []
+        
+        if let date = date {
+            let startOfDay = Calendar.current.startOfDay(for: date)
+            let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
+            predicates.append(NSPredicate(format: "publishedDate >= %@ AND publishedDate < %@", startOfDay as NSDate, endOfDay as NSDate))
+        }
+        
+        if !predicates.isEmpty {
+            fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        }
+        
+        if let filter = filter {
+            switch filter {
+            case "Popularity":
+                fetchRequest.sortDescriptors = [NSSortDescriptor(key: "popularity", ascending: false)]
+            case "Publish at":
+                fetchRequest.sortDescriptors = [NSSortDescriptor(key: "publishedDate", ascending: false)]
+            default:
+                fetchRequest.sortDescriptors = nil
+            }
+        }
         
         do {
             return try context.fetch(fetchRequest)
@@ -78,7 +101,7 @@ class NewsViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         
-        var parameters: [String: String] = ["q": "technology"]
+        var parameters: [String: String] = ["q": "everything"]
         if let date = date {
             let formattedDate = dateFormatter.string(from: date)
             parameters["from"] = formattedDate

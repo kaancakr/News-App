@@ -27,4 +27,5 @@ extension FavouritedNews : Identifiable {
     @NSManaged public var url: String?
     @NSManaged public var author: String?
     @NSManaged public var urlToImage: String?
+    @NSManaged public var popularity: NSNumber?
 }

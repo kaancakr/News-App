@@ -57,7 +57,7 @@ struct NewsDetailView: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text(article.title)
                     .font(.title2)
-                    .lineLimit(2)
+                    .lineLimit(5)
                     .padding(.bottom, 5)
                     .fontWeight(.bold)
                 
